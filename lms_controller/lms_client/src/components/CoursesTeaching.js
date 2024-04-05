@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export default class Student extends Component {
+export default class CoursesTeaching extends Component {
   constructor(props) {
     super(props);
   }
@@ -8,7 +8,7 @@ export default class Student extends Component {
   render() {
     return (
       <h1>
-        Student page
+        CoursesTeaching page
       </h1>
     );
   }

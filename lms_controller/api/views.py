@@ -5,6 +5,8 @@ from .models import Users
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
+
+
 # Create your views here.
 def main(request):
     return HttpResponse("Hello");
@@ -59,4 +61,42 @@ def getUsers(request):
         for row in cursor.fetchall()
     ]
     return Response(data)
+
+
+@api_view(['POST'])
+def register(request):
+    
+    vuname = request.data.get('username')
+    vuemail = request.data.get('email')
+    vupassword = request.data.get('password')
+    vrole = request.data.get('role')
+
+    with connection.cursor() as cursor:
+        # Check if user or email already exists
+        cursor.execute("SELECT * FROM `users` WHERE `username` = %s OR `email` = %s", [vuname, vuemail])
+        if cursor.fetchone():
+            return Response({"message": "Username or email already exists"}, status=400)
+
+        # Insert into users table
+        cursor.execute("INSERT INTO `users` (`username`, `email`, `password`) VALUES (%s, %s, %s)", [vuname, vuemail, vupassword])
+
+        # Insert into role table
+        cursor.execute("INSERT INTO `roles` (`username_id`, `role`) VALUES (%s, %s)", [vuname, vrole])
+
+    return Response({"message": "User registered successfully"}, status=201)
+
+@api_view(['POST'])
+def login(request):
+    vuname = request.data.get('username')
+    vpassword = request.data.get('password')
+
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT `password`, `role` FROM `users` JOIN `roles` ON `users`.`username` = `roles`.`username_id` WHERE `users`.`username` = %s", [vuname])
+        row = cursor.fetchone()
+
+        if row and row[0] == vpassword:
+            return Response({"username": vuname, "role": row[1]}, status=200)
+
+    return Response({"message": "Invalid username or password"}, status=400)
+
 

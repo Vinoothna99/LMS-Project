@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api.apps.ApiConfig',
     'rest_framework',
-    'lms_client.apps.LmsClientConfig'
+    'lms_client.apps.LmsClientConfig',
+    'corsheaders'
 ]
 
 
@@ -52,9 +53,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'lms_controller.urls'
+
+CORS_ALLOW_ALL_ORIGINS = True  # For development only, restrict this in production
+
 
 TEMPLATES = [
     {
@@ -97,9 +102,6 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
-
-
 
 
 # Password validation

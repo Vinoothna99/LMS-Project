@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 
 """
@@ -151,5 +152,40 @@ class AverageRating(models.Model):
 
     class Meta:
         db_table = "averagerating"
+
+
+class CourseDetail(models.Model):
+    course_title = models.CharField(max_length=255)
+    module_number = models.IntegerField()
+    module_name = models.CharField(max_length=255)
+    lesson_number = models.IntegerField()
+    lesson_name = models.CharField(max_length=255)
+    lesson_url = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False  # No database table creation or deletion operations will be performed for this model.
+        db_table = 'course_detail'  # Exact name of the view in the database
+
+class ViewComments(models.Model):
+    course_title = models.CharField(max_length=255)
+    username = models.CharField(max_length=255)
+    user_role = models.CharField(max_length=50)
+    comment_date = models.DateField()
+    comment = models.TextField()
+
+    class Meta:
+        managed = False
+        db_table = 'view_comments'
+
+class ViewQuiz(models.Model):
+    course_title = models.CharField(max_length=255)
+    question_number = models.IntegerField()
+    answer_option_number = models.IntegerField()
+    option_text = models.TextField()
+
+    class Meta:
+        managed = False
+        db_table = 'view_quiz'
+
 
 
