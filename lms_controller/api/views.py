@@ -137,7 +137,7 @@ def join_course(request):
 #VALUES (your_course_id, CURDATE(), 'your_status', 'your_student_id');
     vucourse_id = request.data.get('course_id')
     vustatus = "active"
-    vustudent_id = request.data.get('student_id')
+    vustudent_id = request.data.get('username')
     
 
     with connection.cursor() as cursor:
@@ -153,23 +153,13 @@ def join_course(request):
 def rate(request):
     vucourse_id = request.data.get('course_id')
     vurating = request.data.get('rating')
-    vustudent_id = request.data.get('student_id')
+    vustudent_id = request.data.get('username')
 
     with connection.cursor() as cursor:
         # Check if the rating already exists
-        cursor.execute("SELECT id FROM rating WHERE course_id = %s AND student_id = %s", [vucourse_id, vucourse_id])
-        existing_rating = cursor.fetchone()
-
-        if existing_rating:
-            # Update the existing rating
-            cursor.execute("UPDATE rating SET rating = %s WHERE course_id = %s AND student_id = %s", [vurating, vucourse_id, vustudent_id])
-            action = 'updated'
-        else:
-            # Insert a new rating
-            cursor.execute("INSERT INTO rating (course_id, student_id, rating) VALUES (%s, %s, %s)", [vucourse_id, vustudent_id, vurating])
-            action = 'created'
-
-    return Response({"message": f"Rating {action} successfully."}, status=status.HTTP_200_OK)
+        cursor.execute("CALL insert_rating(%s, %s, %s)",(vucourse_id, vurating, vustudent_id))
+        
+    return Response({"message": "Rating submitted successfully."}, status=status.HTTP_200_OK)
 
 
 
@@ -378,3 +368,32 @@ def create_course(request):
                 cursor.execute("CALL create_lesson(%s, %s, %s, %s, %s)", (lesson_number, title, module_name, lesson_name, lesson_url))
 
     return Response({"message": "Course with modules and lessons created successfully"}, status=status.HTTP_201_CREATED)
+
+
+@api_view(['GET'])
+def view_grades(request):
+    # Extract the username from the request query parameters
+    username = request.query_params.get('username')
+    
+
+    if not username:
+        return Response({"message": "Username is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+    with connection.cursor() as cursor:
+        # Call the stored procedure
+        #cursor.callproc('all_courses', [username])
+        cursor.execute("SELECT course_title, highest_grade FROM view_grades WHERE student_id = %s",[username])
+
+
+        # Fetch the results from the stored procedure call
+        result = cursor.fetchall()
+
+
+        # If result is empty, return a meaningful response
+        if not result:
+            return Response({"message": "No grades found for this course"}, status=status.HTTP_404_NOT_FOUND)
+
+        columns = [col[0] for col in cursor.description]
+        grades = [dict(zip(columns, row)) for row in result]
+
+    return Response({"course comments": grades}, status=status.HTTP_200_OK)
