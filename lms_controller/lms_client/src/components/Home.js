@@ -10,6 +10,7 @@ import Instructor from "./Instructor";
 import Quiz from "./Quiz";
 import Student from "./Student";
 import Courses from "./Courses";
+import Grades from "./Grades";
 import {
     BrowserRouter as Router,
     Routes,
@@ -39,6 +40,7 @@ export default class Home extends Component {
           <Route path="/student" element={<Student />} />
           <Route path="/instructor" element={<Instructor />} />
           <Route path="/quiz" element={<Quiz />} />
+          <Route path="/grade" element={<Grades />} />
 
 
         </Routes>

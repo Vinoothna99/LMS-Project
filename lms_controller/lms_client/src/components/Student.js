@@ -98,6 +98,11 @@ submitRating = async (courseId) => {
                 <Typography variant="h4" component="h1">
                     All Courses
                 </Typography>
+                <Typography>
+                <Button onClick={() => this.handleNavigate('/grade', {state:{ username}})}>
+                                    My Grades
+                </Button>
+                </Typography>
                 {loading ? (
                     <p>Loading courses...</p>
                 ) : (
@@ -108,7 +113,7 @@ submitRating = async (courseId) => {
                                     onClick={() => this.handleNavigate('/course', { state: { username, courseId: course.id, courseTitle: course.title } })}>
                                     {course.title}
                                 </Typography>
-                                <Typography variant="body1">{course.category}</Typography>
+                                <Typography variant="body1">Category: {course.category}</Typography>
                                 <Typography variant="body1">Credits: {course.credits}</Typography>
                                 <Typography variant="body1">Average Rating: {course.average_rating}</Typography>
                                 <Typography variant="body1">Students: {course.no_of_students_enrolled}</Typography>

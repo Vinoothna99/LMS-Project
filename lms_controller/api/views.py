@@ -368,3 +368,32 @@ def create_course(request):
                 cursor.execute("CALL create_lesson(%s, %s, %s, %s, %s)", (lesson_number, title, module_name, lesson_name, lesson_url))
 
     return Response({"message": "Course with modules and lessons created successfully"}, status=status.HTTP_201_CREATED)
+
+
+@api_view(['GET'])
+def view_grades(request):
+    # Extract the username from the request query parameters
+    username = request.query_params.get('username')
+    
+
+    if not username:
+        return Response({"message": "Username is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+    with connection.cursor() as cursor:
+        # Call the stored procedure
+        #cursor.callproc('all_courses', [username])
+        cursor.execute("SELECT course_title, highest_grade FROM view_grades WHERE student_id = %s",[username])
+
+
+        # Fetch the results from the stored procedure call
+        result = cursor.fetchall()
+
+
+        # If result is empty, return a meaningful response
+        if not result:
+            return Response({"message": "No grades found for this course"}, status=status.HTTP_404_NOT_FOUND)
+
+        columns = [col[0] for col in cursor.description]
+        grades = [dict(zip(columns, row)) for row in result]
+
+    return Response({"course comments": grades}, status=status.HTTP_200_OK)
