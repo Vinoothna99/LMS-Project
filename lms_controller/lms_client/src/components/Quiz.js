@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate} from 'react-router-dom';
 import { Card, CardContent, Typography, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material';
 
 function Quiz() {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
   const location = useLocation();
+  const navigate = useNavigate();
+
   const { courseTitle, username } = location.state;
 
   useEffect(() => {
@@ -73,7 +75,9 @@ function Quiz() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-      if (!response.ok) {
+      if (response.ok) {
+        navigate(-1); // navigate to the courses page
+      } else {
         console.error('Failed to submit quiz');
       }
     } catch (error) {
