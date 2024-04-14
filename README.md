@@ -1,154 +1,79 @@
-Below is a README file template that provides detailed instructions on setting up a web application with a Django backend and a React frontend. This guide assumes that the person downloading the source code from GitHub does not have the necessary software installed (npm, Python 3, or any code editor).
+Below is a structured README file that presents the setup instructions based on your summary. This README is intended to guide a user through the process of setting up a project named `LMS` (Learning Management System) which consists of a Django backend and a React frontend. The instructions are formatted for clarity and ease of use.
 
 ---
 
-# Learning Management System
+# LMS Setup Guide
 
-Welcome to the setup guide for Learning Management System. This application is built using Django as the backend framework and React for the frontend.
-
-## Summary
-Step 1: Install python3
-Step 2: Install Node.js and npm
-Step 3: Install Visual Studio Code
-Step 4: Create lms Database using provided sql file that contains DDL and Data
-Step 5: Download code from Github and open the downloaded folder in Visual Studio Code
-Step 6: Install the necessary dependencies for Django and React.
-Step 7: Run the backend - [Open a terminal, type 'cd lms_controller' and then type 'python3 manage.py runserver'
-Step 8: Run the frontend - [Open a new terminal, type 'cd lms_controller/lms_client' and then type 'npm run dev'
-Step 9: Open the link [http://127.0.0.1:8000] in a web browser.
-Step 10: On the website, click login and use the following credentials: ['EmilyRichards','password123'] to login into a student account. Or, ['JessicaJones', 'password101'] to login as an instructor. Or register for a new account.
-
-## Additional Information
-
-For detailed information on how to use and develop this project, please refer to the detailed documentation below.
+Welcome to the Learning Management System (LMS). This guide will walk you through the setup process to get your application up and running on your local machine.
 
 ## Prerequisites
 
-Before you begin, you will need to install the following on your machine:
+Before you start, ensure you have administrative access to your computer and are connected to the internet.
 
-1. **Python 3**: Needed to run the Django backend.
-2. **Node.js and npm**: Required for managing frontend dependencies and running the React application.
-3. **Visual Studio Code** (optional, but recommended): A code editor that can help with development.
-
-## Installation Steps
+## Step-by-Step Installation
 
 ### Step 1: Install Python 3
-
-#### Windows:
-1. Download the Python installer from [python.org](https://www.python.org/downloads/windows/).
-2. Run the installer. Ensure you check the box that says "Add Python 3.x to PATH" at the beginning of the installation process.
-3. To verify the installation, open Command Prompt and type:
-   ```
-   python --version
-   pip --version
-   ```
-
-#### macOS:
-1. You can install Python using Homebrew (a package manager for macOS). If you don't have Homebrew installed, open Terminal and run:
-   ```
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-   ```
-2. Then install Python 3 by running:
-   ```
-   brew install python
-   ```
-3. To verify the installation, in your Terminal run:
-   ```
-   python3 --version
-   pip3 --version
-   ```
-
-#### Linux:
-1. Most Linux distributions come with Python pre-installed. You can check your Python version by running:
-   ```
-   python3 --version
-   ```
-2. If Python is not installed, you can install it using your distribution’s package manager (for Ubuntu):
-   ```
-   sudo apt update
-   sudo apt install python3 python3-pip
-   ```
+- Download Python 3 from [python.org](https://www.python.org/downloads/) and follow the installation instructions. Make sure to add Python to your system's PATH.
 
 ### Step 2: Install Node.js and npm
-
-#### Windows and macOS:
-1. Download and install Node.js from [nodejs.org](https://nodejs.org/). Npm is included with Node.js.
-2. To verify the installation, run:
-   ```
-   node --version
-   npm --version
-   ```
-
-#### Linux:
-1. You can install Node.js and npm from the NodeSource repository which provides up-to-date versions. Run:
-   ```
-   curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-   sudo apt install -y nodejs
-   ```
-2. Verify the installation:
-   ```
-   node --version
-   npm --version
-   ```
+- Visit [nodejs.org](https://nodejs.org/) to download and install Node.js. npm is included in the installation. Verify the installation by running `node --version` and `npm --version` in your terminal or command prompt.
 
 ### Step 3: Install Visual Studio Code
+- Download Visual Studio Code from [code.visualstudio.com](https://code.visualstudio.com/). Follow the provided installation guide for your operating system.
 
-1. Download Visual Studio Code from [code.visualstudio.com](https://code.visualstudio.com/).
-2. Follow the installation instructions based on your operating system.
-3. After installation, launch Visual Studio Code.
+### Step 4: Create the LMS Database
+- Use the provided SQL file to create and populate the `lms` database. This can typically be done through a database management tool like MySQL Workbench or a command-line tool such as MySQL command-line client.
 
-### Step 4: Setup the Project
+### Step 5: Download the Code
+- Clone the repository from GitHub using:
+  ```
+  git clone https://github.com/Vinoothna99/LMS-Project.git
+  ```
+- Navigate to the cloned directory in Visual Studio Code by opening Visual Studio Code, selecting `File > Open Folder`, and selecting the cloned directory.
 
-#### Clone the Repository
-1. Open your terminal or command prompt.
-2. Clone the repository:
-   ```
-   git clone [URL to your GitHub repository]
-   cd [repository name]
-   ```
-#### Set up the Database (Mysql Workbench)
-1. Run the provided sql document with necessary DDL and Data.
-2. A database 'lms' will be created.
-   
-#### Set up the Backend (Django)
-1. Navigate to the backend directory: Open a terminal
-   ```
-   cd lms_controller
-   ```
-2. Install dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-5. Run migrations:
-   ```
-   python3 manage.py migrate
-   ```
-6. Start the backend server:
-   ```
-   python3 manage.py runserver
-   ```
+### Step 6: Install Dependencies
+- **Backend (Django) Dependencies:**
+- Open a terminal in Visual studio code and type the following
+  ```
+  cd lms_controller
+  pip install -r requirements.txt
+  ```
+- **Frontend (React) Dependencies:**
+- Open a new terminal in Visual studio code and type the following
+  ```
+  cd lms_controller/lms_client
+  npm install
+  ```
 
-#### Set up the Frontend (React)
-1. Navigate to the frontend directory: Open a new Terminal
-   ```
-   cd lms_controller
-   cd lms_client
-   ```
-3. Install npm dependencies:
-   ```
-   npm install
-   ```
-4. Start the React development server:
-   ```
-   npm run dev
-   ```
+### Step 7: Run the Backend
+- Open a terminal in Visual Studio Code, navigate to the `lms_controller` directory if not already there, and run:
+  ```
+  python3 manage.py runserver
+  ```
 
-## Usage
+### Step 8: Run the Frontend
+- Open a new terminal in Visual Studio Code, navigate to `lms_controller/lms_client`, and execute:
+  ```
+  npm run dev
+  ```
 
-After setting up both the backend and frontend, you can access the application by visiting [http://127.0.0.1:8000] in your web browser.
+### Step 9: Access the Application
+- Open a web browser and go to [http://127.0.0.1:8000](http://127.0.0.1:8000) to access the LMS application.
 
+### Step 10: Login to the System
+- To login as a student, use the credentials: Username `EmilyRichards`, Password `password123`.
+- To login as an instructor, use the credentials: Username `JessicaJones`, Password `password101`.
+- Alternatively, you can register for a new account using the registration form on the website.
 
+## Troubleshooting
+
+If you encounter any issues during the installation or running of the application:
+- Ensure all steps were followed correctly.
+- Check that all dependencies were installed without errors.
+- Make sure the database is properly set up with the initial schema and data.
+
+For further assistance, contact me.
 
 ---
 
-This README provides comprehensive guidance on setting up a full-stack web application for new developers. Adjust the repository URL and any specific project details as necessary.
+This README file provides a clear, step-by-step guide to setting up the LMS project, tailored for users who might not have prior experience with these technologies. 
